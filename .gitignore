@@ -1,0 +1,5 @@
+### Laravel ###
+/bootstrap/compiled.php
+.env
+/vendor
+/storage
