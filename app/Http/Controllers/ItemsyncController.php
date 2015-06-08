@@ -45,14 +45,15 @@ class ItemsyncController extends Controller {
 		$client = new Curl();  
 		$client->send($request, $response);
 		$result = json_decode($response->getContent());
-		if (isset($result->response->status) && $result->response->status == 'ERROR') {
-		    die('error occured: ' . $result->response->errormessage);
-		}
+		$status_code=$response->getStatusCode();		
+               if($status_code=="400" && $result->message=="Invalid attribute name: %1" && $result->parameters[0]=="kensium")
+		{
+		return "please create product custom attribute 'kensium'";
+		}	
 		if (!file_exists(public_path().'/images/'.$user_id)) {
     		mkdir(public_path().'/images/'.$user_id, 0777, true);
-		}
-               
-		if($result)
+		}	
+		if(isset($result->items) && $result->items!=null)
                 {
 			foreach($result->items as $product)
 			{
@@ -66,7 +67,7 @@ class ItemsyncController extends Controller {
                 	$renamed_host=str_replace("index.php/","",$host);
 			foreach($product->custom_attributes as $key=>$custom_attribute){
 			if($custom_attribute->attribute_code=="image"){
-			$image_file=$renamed_host."pub/media/catalog/product".$custom_attribute->value;
+			$image_file=$renamed_host."/pub/media/catalog/product".$custom_attribute->value;
 			}
 			if($custom_attribute->attribute_code=="description"){
 			$item->description=$custom_attribute->value;
@@ -88,7 +89,9 @@ class ItemsyncController extends Controller {
 			$item->save();
                 	echo "   ".$product->name." saved to db<br>";
 			}
- 		}
+ 		} else {
+ 			echo "nothing synced";
+		       }
 
 	}
 
