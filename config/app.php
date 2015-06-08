@@ -136,6 +136,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -194,7 +195,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
                 'Form'=> 'Illuminate\Html\FormFacade',
-                'HTML'=> 'Illuminate\Html\HtmlFacade'
+                'HTML'=> 'Illuminate\Html\HtmlFacade',
+                'Entrust' => 'Zizaco\Entrust\EntrustFacade'
 
 	],
 

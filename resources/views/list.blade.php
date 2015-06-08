@@ -143,7 +143,7 @@
 <div id="container">	
 
 	<?php $renamed_host=str_replace("/index.php","",url());?>
-	<?php foreach($items as $item) { ?>
+	<?php foreach($items->getCollection()->all() as $item) { ?>
 	<div class="widget homepage">
 	
 		<div class="entry-container span4">
@@ -194,7 +194,7 @@
 <!-- When this link is clicked, the blog will load this content dynamically -->
 
 <nav id="page_nav">
-   <a href="http://localhost/magelaravel/public/index2.html"></a>
+   <a href="http://localhost/magelaravel/public/index.php?page=2"></a>
 </nav>
 
 <!-- Footer
