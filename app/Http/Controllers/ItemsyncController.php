@@ -3,9 +3,10 @@ namespace App\Http\Controllers;
 use Buzz\Message\Request;
 use Buzz\Message\Response;
 use Buzz\Client\Curl;
-use App\Userswebsiteinfo;
+use App\models\Userswebsiteinfo;
 use Auth;
-use App\Item;
+use App\models\Item;
+use Illuminate\Support\Facades\Redirect;
 class ItemsyncController extends Controller {
 
 	/*
@@ -36,6 +37,7 @@ class ItemsyncController extends Controller {
 	 */
 	public function index()
 	{
+               if(Auth::user()->hasRole('merchant')){
 		$user_id = Auth::user()->id;		
 		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
 		$host=$model->host;
@@ -92,6 +94,10 @@ class ItemsyncController extends Controller {
  		} else {
  			echo "nothing synced";
 		       }
+          } 
+	else {
+		return Redirect::to('home');
+	     }
 
 	}
 

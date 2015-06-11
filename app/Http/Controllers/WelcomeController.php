@@ -1,5 +1,5 @@
 <?php namespace App\Http\Controllers;
-use App\Item;
+use App\models\Item;
 class WelcomeController extends Controller {
 
 	/*

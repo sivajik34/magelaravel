@@ -125,8 +125,9 @@
 					<li>
 						<a><span data-toggle="collapse" data-target="#pages-collapse"></span>PAGES</a>
 						<ul id="pages-collapse" class="collapse out">
-							<li><a href="#filter=.page-about">ABOUT</a></li>
-							<li><a href="#filter=.page-team">TEAM</a></li>
+							<li><a href="<?php echo url().'/auth/login';?>">LOGIN</a></li>
+							<li><a href="<?php echo url().'/auth/register';?>">REGISTER</a></li>
+                                                        <li><a href="<?php echo url().'/auth/register';?>">VENDER REGISTER</a></li>
 							<li><a href="#filter=.page-contact">CONTACT</a></li>
 						</ul>
 					</li>
