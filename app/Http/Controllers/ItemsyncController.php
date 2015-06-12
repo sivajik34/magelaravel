@@ -59,8 +59,8 @@ class ItemsyncController extends Controller {
                 {
 			foreach($result->items as $product)
 			{
-			//echo "<pre>";print_r($custom_attribute->value);exit;
-			$item = new Item;
+			echo "<pre>";print_r($product);exit;
+			$item = Item::firstOrNew(array('user_id' => $user_id,'sku'=>$product->sku,'store_id'=>$product->store_id));
                		$item->user_id= $user_id;
                 	$item->sku    = $product->sku;
 			$item->name   = $product->name;
@@ -73,6 +73,15 @@ class ItemsyncController extends Controller {
 			}
 			if($custom_attribute->attribute_code=="description"){
 			$item->description=$custom_attribute->value;
+			}
+			if($custom_attribute->attribute_code=="meta_title"){
+			$item->meta_title=$custom_attribute->value;
+			}
+			if($custom_attribute->attribute_code=="meta_keyword"){
+			$item->meta_keywords=$custom_attribute->value;
+			}
+			if($custom_attribute->attribute_code=="meta_description"){
+			$item->meta_description=$custom_attribute->value;
 			}
 			if($custom_attribute->attribute_code=="url_key"){
 			$item->url = $custom_attribute->value.'.html';  
