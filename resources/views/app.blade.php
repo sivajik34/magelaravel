@@ -28,12 +28,18 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Laravel</a>
+				<a class="navbar-brand" href="#">Kensium Merchant Place</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
+					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('admin')) { ?>
+					<li><a href="{{ url('/admin/manageroles') }}">Manage Merchants</a></li>
+					<?php } ?>
+					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>
+					<li><a href="{{ url('/itemsync') }}">Item sync</a></li>
+					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li>Role is not Assigend.</li><?php }?>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

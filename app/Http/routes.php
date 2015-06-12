@@ -20,4 +20,5 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 Route::get('/itemsync', 'ItemsyncController@index');
-Route::get('/check', 'WelcomeController@check');
+Route::get('/admin/manageroles', 'Admin\ManageRolesController@index');
+Route::get('/admin/manageroles/activate/{id}', 'Admin\ManageRolesController@update');

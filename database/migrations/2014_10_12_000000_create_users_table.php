@@ -27,8 +27,11 @@ class CreateUsersTable extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->string('host');
-			$table->string('resource');
-			$table->string('param');			
+			$table->string('company');
+			$table->string('country');
+			$table->string('mobile');
+			$table->boolean('status')->default(false);
+			$table->string('notes')->nullable();			
 			$table->timestamps();
 		});
 	}
@@ -40,8 +43,9 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
                 Schema::drop('userswebsiteinfo');
+		Schema::drop('users');
+                
 	}
 
 }

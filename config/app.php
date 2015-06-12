@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', false),
+	'debug' => env('APP_DEBUG', true),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -136,7 +136,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
-		'Zizaco\Entrust\EntrustServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider','Nayjest\Grids\ServiceProvider','Collective\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -196,7 +196,10 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
                 'Form'=> 'Illuminate\Html\FormFacade',
                 'HTML'=> 'Illuminate\Html\HtmlFacade',
-                'Entrust' => 'Zizaco\Entrust\EntrustFacade'
+                'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+	        'Form1'  => 'Illuminate\Html\FormFacade',
+    		'HTML1'  => 'Collective\Html\HtmlFacade',
+    		'Grids'     => 'Nayjest\Grids\Grids',
 
 	],
 
