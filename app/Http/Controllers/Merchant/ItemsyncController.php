@@ -32,12 +32,7 @@ class ItemsyncController extends Controller {
 		$this->middleware('auth');
 	}
 	public function index(){
- 		if(Auth::user()->hasRole('merchant')){
 		return view('merchant.itemsync');
-		}else {
-		return Redirect::to('home');
-	       }
-
 	}
 	/**
 	 * 
@@ -46,7 +41,6 @@ class ItemsyncController extends Controller {
 	 */
 	public function sync()
 	{
-               if(Auth::user()->hasRole('merchant')){
 		$user_id = Auth::user()->id;		
 		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
 		$host=$model->host;
@@ -73,17 +67,11 @@ class ItemsyncController extends Controller {
  		} else {
  			echo "nothing synced";
 		       }
-          } 
-	else {
-		return Redirect::to('home');
-	     }
 
 	}
 	public function appendSync(){ 
-		   if(Auth::user()->hasRole('merchant')){
-			
-		$user_id = Auth::user()->id;
-				
+		  
+		$user_id = Auth::user()->id;				
 		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
 		$host=$model->host;
 		$resource='rest/V1/products?searchCriteria[filter_groups][0][filters][0][field]=kensium&searchCriteria[filter_groups][0][filters][0][value]=1&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[current_page]=1&searchCriteria[page_size]=25';
@@ -113,10 +101,7 @@ class ItemsyncController extends Controller {
  		} else {
  			echo "nothing synced";
 		       }
-          } 
-	else {
-		return Redirect::to('home');
-	     } }
+          }
 
 	protected function saveItem($product,$user_id,$host){
 			//echo "<pre>";print_r($product);exit;

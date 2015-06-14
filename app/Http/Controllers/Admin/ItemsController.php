@@ -21,22 +21,16 @@ class ItemsController extends Controller {
 	}
 	public function index()
 	{
- 		if(Auth::user()->hasRole('admin')){
-			$items=Items::all()->get();
-                	return view('admin.listitems',['items' => $items]);
-		}else {
-			return Redirect::to('home');
-	     	}
+		$items=Items::all()->get();
+               	return view('admin.listitems',['items' => $items]);
+		
 	}
 	public function merchantItems($id)
 	{
 
- 		if(Auth::user()->hasRole('admin')){
-			$items=Item::Where('user_id',$id)->paginate(5);
-                	return view('admin.listitems',['items' => $items]);
-		}else {
-			return Redirect::to('home');
-	     	}
+		$items=Item::Where('user_id',$id)->paginate(5);
+               	return view('admin.listitems',['items' => $items]);
+		
 	}
 	/**
 	 * Show the form for creating a new resource.

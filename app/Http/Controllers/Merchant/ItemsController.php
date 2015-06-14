@@ -21,13 +21,9 @@ class ItemsController extends Controller {
 	 */
 	public function index()
 	{
- 		if(Auth::user()->hasRole('merchant')){
-			$user_id = Auth::user()->id;
-			$items=Item::where('user_id',$user_id)->paginate(5);
-                	return view('merchant.listitems',['items' => $items]);
-		}else {
-			return Redirect::to('home');
-	     	}
+		$user_id = Auth::user()->id;
+		$items=Item::where('user_id',$user_id)->paginate(5);
+                return view('merchant.listitems',['items' => $items]);
 	}
 
 	/**
