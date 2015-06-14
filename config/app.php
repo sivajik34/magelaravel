@@ -136,7 +136,10 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
-		'Zizaco\Entrust\EntrustServiceProvider','Nayjest\Grids\ServiceProvider','Collective\Html\HtmlServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
+		'Nayjest\Grids\ServiceProvider',
+		'Collective\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -197,6 +200,7 @@ return [
                 'Form'=> 'Illuminate\Html\FormFacade',
                 'HTML'=> 'Illuminate\Html\HtmlFacade',
                 'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
 	        'Form1'  => 'Illuminate\Html\FormFacade',
     		'HTML1'  => 'Collective\Html\HtmlFacade',
     		'Grids'     => 'Nayjest\Grids\Grids',

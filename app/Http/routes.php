@@ -19,6 +19,14 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-Route::get('/itemsync', 'ItemsyncController@index');
 Route::get('/admin/manageroles', 'Admin\ManageRolesController@index');
 Route::get('/admin/manageroles/activate/{id}', 'Admin\ManageRolesController@update');
+Route::get('/admin/manageitems/merchantitems/{id}', 'Admin\ItemsController@merchantItems');
+Route::get('/admin/manageitems/publishyes/{id}', 'Admin\ItemsController@publishAccept');
+Route::get('/admin/manageitems/publishno/{id}', 'Admin\ItemsController@publishReject');
+Route::get('/merchant/itemsync', 'Merchant\ItemsyncController@index');
+Route::get('/merchant/sync', 'Merchant\ItemsyncController@sync');
+Route::get('/merchant/appendsync', 'Merchant\ItemsyncController@appendSync');
+Route::get('/merchant/manageitems', 'Merchant\ItemsController@index');
+Route::get('/merchant/manageitems/requesttopublish/{id}', 'Merchant\ItemsController@requestToPublish');
+Route::get('/merchant/manageitems/publishit/{id}', 'Merchant\ItemsController@publishit');

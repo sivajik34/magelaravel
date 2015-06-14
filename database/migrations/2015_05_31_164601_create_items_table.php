@@ -27,7 +27,10 @@ class CreateItemsTable extends Migration {
 			$table->text('meta_keywords');
 		        $table->text('meta_description');
                         $table->string('special_price');
+			$table->string('coupon');
                         $table->string('image');
+			$table->string('thumbnail_image');
+			$table->string('small_image');
                         $table->string('qty');
                         $table->boolean('status');
                         $table->tinyInteger('publish')->unsigned();

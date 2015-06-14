@@ -30,7 +30,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-	$items = Item::paginate(8);
+	$items = Item::where('publish', '=', 5)->paginate(8);
         return view('list')->with('items', $items);
 	}
 	

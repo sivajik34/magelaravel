@@ -10,13 +10,14 @@
 				<div class="panel-body"><div class="table-responsive">
 					<table class="table">
 					<tr>
-					<th>name</th>
-					<th>email</th>
-					<th>website</th>
-					<th>company</th>
-					<th>country</th>
-					<th>mobile</th>
-					<th>status</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Website</th>
+					<th>Company</th>
+					<th>Country</th>
+					<th>Mobile</th>
+					<th>Status</th>
+					<th>Items</th>
 					</tr>
 					<?php
 				foreach($users as $user){
@@ -37,7 +38,9 @@
 ?><a href="<?php echo url('/admin/manageroles/activate/'.$user->id); ?>">Activate</a><?php
 
 
-}?></td>
+}?></td><td><?php if($user->userswebsiteinfo->status){ ?>
+				<a href="<?php echo url('/admin/manageitems/merchantitems/'.$user->id); ?>">Manage</a>
+				<?php } ?></td>
 				</tr>
 				<?php }
         			 ?></table>
