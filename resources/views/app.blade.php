@@ -33,12 +33,13 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/') }}" target="_blank">Home(front end store )</a></li>
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('admin')) { ?>
 					<li><a href="{{ url('/admin/manageroles') }}">Manage Merchants</a></li>
 					<?php } ?>
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>
-					<li><a href="{{ url('/itemsync') }}">Item sync</a></li>
+					<li><a href="{{ url('/merchant/itemsync') }}" >Item sync</a></li>
+					<li><a href="{{ url('/merchant/manageitems') }}">Manage Items</a></li>
 					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li>Role is not Assigend.</li><?php }?>
 				</ul>
 

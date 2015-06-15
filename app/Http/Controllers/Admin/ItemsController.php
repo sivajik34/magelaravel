@@ -1,29 +1,37 @@
 <?php namespace App\Http\Controllers\Admin;
-
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\models\Role;
 use App\models\User;
 use App\models\Permission;
 use Illuminate\Http\Request;
+use App\models\Item;
 use Redirect;
-class ManageRolesController extends Controller {
+class ItemsController extends Controller {
 
-        public function __construct()
-	{
-		$this->middleware('auth');
-	}
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 	public function index()
 	{
-		$users=User::with('userswebsiteinfo')->get();
-                return view('admin.listmerchants',['users' => $users]);
+		$items=Items::all()->get();
+               	return view('admin.listitems',['items' => $items]);
+		
 	}
+	public function merchantItems($id)
+	{
 
+		$items=Item::Where('user_id',$id)->paginate(5);
+               	return view('admin.listitems',['items' => $items]);
+		
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -72,16 +80,20 @@ class ManageRolesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function publishAccept($id)
 	{
-	 $user = User::with('userswebsiteinfo')->find($id);
-	 $user->userswebsiteinfo->status = 1;
-	 $user->push();
-         $merchant=Role::find(2);	 
-	 $user->attachRole($merchant); 	 
+	  $item = Item::find($id);
+	 $item->publish = 3;
+	 $item->save();	 
          return Redirect::back()->with('message','Updated Successful !');
 	}
-
+	public function publishReject($id)
+	{
+	  $item = Item::find($id);
+	 $item->publish = 4;
+	 $item->save();	 
+         return Redirect::back()->with('message','Updated Successful !');
+	}
 	/**
 	 * Remove the specified resource from storage.
 	 *
