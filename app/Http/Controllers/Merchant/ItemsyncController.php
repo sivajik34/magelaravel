@@ -9,6 +9,7 @@ use Auth;
 use App\models\Item;
 use Illuminate\Support\Facades\Redirect;
 use Image;
+use Session;
 class ItemsyncController extends Controller {
 
 	/*
@@ -48,6 +49,8 @@ class ItemsyncController extends Controller {
 		$request = new Request('GET',$resource,$host);
 		$response = new Response();
 		$client = new Curl();  
+                Session::put('progress',"before curl");
+    		Session::save();
 		$client->send($request, $response);
 		$result = json_decode($response->getContent());
 		$status_code=$response->getStatusCode();		
@@ -60,13 +63,19 @@ class ItemsyncController extends Controller {
 		}	
 		if(isset($result->items) && $result->items!=null)
                 {
+			Session::put('progress', "records saving started");
+    			Session::save();
 			foreach($result->items as $product)
 			{
-				$this->saveItem($product,$user_id,$host);	                  	
+				$this->saveItem($product,$user_id,$host);
+				Session::put('progress', $product->name);
+			        Session::save();	                  	
 			}
  		} else {
  			echo "nothing synced";
 		       }
+		return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+ 		
 
 	}
 	public function appendSync(){ 
@@ -101,8 +110,11 @@ class ItemsyncController extends Controller {
  		} else {
  			echo "nothing synced";
 		       }
+		return response()->json(['name' => 'Abigail', 'state' => 'CA']);
           }
-
+	public function getProgress() {
+    			return Response::json(array(Session::get('progress')));
+	}
 	protected function saveItem($product,$user_id,$host){
 			//echo "<pre>";print_r($product);exit;
 			$item = Item::firstOrNew(array('user_id' => $user_id,'sku'=>$product->sku,'store_id'=>$product->store_id));
@@ -112,51 +124,54 @@ class ItemsyncController extends Controller {
 			$item->name   = $product->name;
                 	$item->store_id=$product->store_id;
                 	$item->price = $product->price;
+                      //  $item->visibility = $product->visibility;
+                        //$item->type_id = $product->type_id;
                 	$renamed_host=str_replace("index.php/","",$host);
 			foreach($product->custom_attributes as $key=>$custom_attribute){
-			if($custom_attribute->attribute_code=="image"){
-			$image_file=$renamed_host."/pub/media/catalog/product".$custom_attribute->value;
-			$extension = pathinfo($image_file, PATHINFO_EXTENSION);
-			$filenameOut = public_path().'/images/'.$user_id.'/'.$product->sku.".".$extension;
-			$ch = curl_init($image_file);
-			$fp = fopen($filenameOut, 'wb');
-			curl_setopt($ch, CURLOPT_FILE, $fp);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_exec($ch);
-			curl_close($ch);
-			fclose($fp);
-               	        $item->image='/images/'.$user_id.'/'.$product->sku.".".$extension; 
- 			$renamed_host=str_replace("/index.php","",url());
-			$path=$renamed_host.$item->image;
-			$extension = pathinfo($path, PATHINFO_EXTENSION);
-			$filenameOut = public_path().'/images/'.$item->user_id.'/small_'.$item->sku.".".$extension;
-       			$img=Image::make($path)->resize(75, 75)->save($filenameOut);
-                        $item->thumbnail_image='/images/'.$user_id.'/small_'.$product->sku.".".$extension;
+                        $custom_attr_code=$custom_attribute->attribute_code;
+                        switch($custom_attr_code){
+                              case "image" :
+				           $image_file=$renamed_host."/pub/media/catalog/product".$custom_attribute->value;
+					   $extension = pathinfo($image_file, PATHINFO_EXTENSION);
+					   $filenameOut = public_path().'/images/'.$user_id.'/'.$product->sku.".".$extension;
+					   $ch = curl_init($image_file);
+					   $fp = fopen($filenameOut, 'wb');
+					   curl_setopt($ch, CURLOPT_FILE, $fp);
+					   curl_setopt($ch, CURLOPT_HEADER, 0);
+					   curl_exec($ch);
+					   curl_close($ch);
+					   fclose($fp);
+               	        		   $item->image='/images/'.$user_id.'/'.$product->sku.".".$extension; 
+ 			                   $renamed_host=str_replace("/index.php","",url());
+			                   $path=$renamed_host.$item->image;
+			                   $extension = pathinfo($path, PATHINFO_EXTENSION);
+		              	           $filenameOut = public_path().'/images/'.$item->user_id.'/small_'.$item->sku.".".$extension;
+       					   $img=Image::make($path)->resize(75, 75)->save($filenameOut);
+                                           $item->thumbnail_image='/images/'.$user_id.'/small_'.$product->sku.".".$extension;
+			                   break;
+                              case "description" :
+				       	  $item->description=$custom_attribute->value;
+					   break;
+			      case "meta_title" :
+					   $item->meta_title=$custom_attribute->value;
+					   break;
+			      case "meta_keyword" :
+					   $item->meta_keywords=$custom_attribute->value;
+					   break;
+			      case "meta_description" :
+				        	$item->meta_description=$custom_attribute->value;
+					break;
+				case "url_key" :
+					$item->url =$host.$custom_attribute->value.'.html';
+					break;
 			}
-			if($custom_attribute->attribute_code=="description"){
-			$item->description=$custom_attribute->value;
-			}
-			if($custom_attribute->attribute_code=="meta_title"){
-			$item->meta_title=$custom_attribute->value;
-			}
-			if($custom_attribute->attribute_code=="meta_keyword"){
-			$item->meta_keywords=$custom_attribute->value;
-			}
-			if($custom_attribute->attribute_code=="meta_description"){
-			$item->meta_description=$custom_attribute->value;
-			}
-			if($custom_attribute->attribute_code=="url_key"){
-			$item->url = $custom_attribute->value.'.html';  
-			}
+			
+		
 			}
 			
                         $item->publish=Item::SYNCED;               	        
 			$item->save();
-			echo "   ".$product->name." saved to db<br />";
-			//echo(str_repeat(' ', 256));
-    		        //flush();
-   		        //ob_flush();
-    			//sleep(1); 
+			
 	}
 
 }
