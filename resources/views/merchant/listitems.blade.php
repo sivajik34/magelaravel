@@ -40,14 +40,18 @@
 						case 3:
 						echo "accepted";
  ?>
-						<a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> Publish</a><?php
+						<a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php
 						break;
 						case 4 :
 						echo "rejected";
 						break;
 						case 5 :
-						echo "published";
-						break;
+						echo "published";?>
+				<a href="<?php echo url('/merchant/manageitems/unpublishit/'.$item->id); ?>">unpublish</a>
+						<?php break;
+						case 6 :
+						echo "unpublished";?>
+<a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php 
 					}
 					?></td>
 				</tr>
