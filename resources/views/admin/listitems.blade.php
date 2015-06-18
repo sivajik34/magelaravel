@@ -33,11 +33,7 @@
 						break;
 						case 2 :
 						echo "pending";
- ?>{!! Form::open(array('url' => '/merchant/sync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview' )) !!}
-    <!-- different inputs ... -->
-        {!! Form::submit('Accept', array('class' => 'btn btn-lg btn-success')) !!}
-    {!! Form::close() !!}
-						<a href="<?php echo url('/admin/manageitems/publishyes/'.$item->id); ?>">Accept</a>
+ ?>			<a href="<?php echo url('/admin/manageitems/publishyes/'.$item->id); ?>">Accept</a>
                                                 <a href="<?php echo url('/admin/manageitems/publishno/'.$item->id); ?>">Reject</a><?php
 						break;
 						case 3:
@@ -61,22 +57,6 @@
 			</div>
 		</div>
 	</div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#form-overview').on('submit', function() {           
 
-            $.post(
-                $(this).prop('action'),
-                {"_token": $(this).find('input[name=_token]').val()},
-                function() {
-                   $('#progress').html("succesjjs..");// window.location.href = 'success';
-                },
-                'json'
-            );
-
-            return false;
-        });
-    });
-</script>   
 </div>
 @endsection

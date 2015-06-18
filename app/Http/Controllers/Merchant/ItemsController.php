@@ -83,17 +83,50 @@ class ItemsController extends Controller {
 	}
 	public function requestToPublish($id)
 	{
-	 $item = Item::find($id);
-	 $item->publish = 2;
-	 $item->save();	 
-         return Redirect::back()->with('message','Updated Successful !');
+	 	$item = Item::find($id);
+		$user_id = Auth::user()->id;
+	   	if(($item->publish==1 || $item->publish==4) && ($user_id==$item->user_id))
+		{
+	 		$item->publish = 2;
+	 		$item->save();
+                	return Redirect::back()->with('message','Updated Successful !');
+		} 
+         	return redirect('/home');
+	}
+	public function undorequestToPublish($id)
+	{
+	 	$item = Item::find($id);
+                $user_id = Auth::user()->id;
+	   	if(($item->publish==2) && ($user_id==$item->user_id))
+		{
+	 		$item->publish = 1;
+	 		$item->save();
+                	return Redirect::back()->with('message','Updated Successful !');
+		} 
+         	return redirect('/home');
 	}
 	public function publishit($id)
 	{
-	 $item = Item::find($id);
-	 $item->publish = 5;
-	 $item->save();	 
-         return Redirect::back()->with('message','Updated Successful !');
+		 $item = Item::find($id);
+                 $user_id = Auth::user()->id;
+		 if(($item->publish==3 || $item->publish==6) && ($user_id==$item->user_id))
+		 {
+	 		$item->publish = 5;
+	 		$item->save();	 
+         		return Redirect::back()->with('message','Updated Successful !');
+		 }
+		 return redirect('/home');
+	}
+	public function unpublishit($id)
+	{
+		 $item = Item::find($id);
+                 $user_id = Auth::user()->id;
+		 if(($item->publish==5) && ($user_id==$item->user_id))
+		 {
+	 		$item->publish = 6;
+	 		$item->save();	 
+         		return Redirect::back()->with('message','Updated Successful !');
+		 }
 	}
 	/**
 	 * Remove the specified resource from storage.

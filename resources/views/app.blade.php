@@ -41,7 +41,7 @@
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>
 					<li><a href="{{ url('/merchant/itemsync') }}" >Item sync</a></li>
 					<li><a href="{{ url('/merchant/manageitems') }}">Manage Items</a></li>
-					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li>Role is not Assigend.</li><?php }?>
+					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li>Admin approval pending for item sync.</li><?php }?>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

@@ -108,8 +108,8 @@ class ItemsyncController extends Controller {
 			$item->name   = $product->name;
                 	$item->store_id=$product->store_id;
                 	$item->price = $product->price;
-                      //  $item->visibility = $product->visibility;
-                        //$item->type_id = $product->type_id;
+                        $item->visibility = $product->visibility;
+                        $item->type_id = $product->type_id;
                 	$renamed_host=str_replace("index.php/","",$host);
 			foreach($product->custom_attributes as $key=>$custom_attribute){
                         $custom_attr_code=$custom_attribute->attribute_code;

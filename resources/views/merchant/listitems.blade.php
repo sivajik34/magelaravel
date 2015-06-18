@@ -20,7 +20,7 @@
 				foreach($items as $item){
 				?>
 				<tr><td>
-<input type="checkbox" name="item" value="<?php echo $item->id; ?>" <?php if($item->publish==2 ||$item->publish==5 ) echo "disabled"; ?> ></td>
+<input type="checkbox" name="item" value="<?php echo $item->id; ?>"></td>
 				<td><img src="<?php echo $renamed_host.$item->thumbnail_image; ?>"alt ="<?php echo $item->name; ?>"/></td>
 				<td><?php echo $item->name; ?></td>
 				<td><?php echo $item->sku ?></td>

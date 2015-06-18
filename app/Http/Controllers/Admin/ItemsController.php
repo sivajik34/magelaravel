@@ -82,17 +82,25 @@ class ItemsController extends Controller {
 	 */
 	public function publishAccept($id)
 	{
-	  $item = Item::find($id);
-	 $item->publish = 3;
-	 $item->save();	 
-         return Redirect::back()->with('message','Updated Successful !');
+	  	$item = Item::find($id);
+		if($item->publish==2)
+		{
+	 	$item->publish = 3;
+	 	$item->save();	 
+         	return Redirect::back()->with('message','Updated Successful !');
+		}
+		return redirect('/home');
 	}
 	public function publishReject($id)
 	{
-	  $item = Item::find($id);
-	 $item->publish = 4;
-	 $item->save();	 
-         return Redirect::back()->with('message','Updated Successful !');
+	  	$item = Item::find($id);
+		if($item->publish==2)
+		{
+	 	$item->publish = 4;
+	 	$item->save();	 
+         	return Redirect::back()->with('message','Updated Successful !');
+		}
+		return redirect('/home');
 	}
 	/**
 	 * Remove the specified resource from storage.

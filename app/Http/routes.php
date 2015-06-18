@@ -32,4 +32,5 @@ Route::get('/merchant/appendsync', 'Merchant\ItemsyncController@appendSync');
 Route::get('/merchant/manageitems', 'Merchant\ItemsController@index');
 Route::get('/merchant/manageitems/requesttopublish/{id}', 'Merchant\ItemsController@requestToPublish');
 Route::get('/merchant/manageitems/publishit/{id}', 'Merchant\ItemsController@publishit');
+Route::get('/merchant/manageitems/unpublishit/{id}', 'Merchant\ItemsController@unpublishit');
 Entrust::routeNeedsRole('merchant/*', 'merchant', Redirect::to('/home'));
