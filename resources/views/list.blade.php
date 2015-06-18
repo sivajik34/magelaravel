@@ -85,7 +85,7 @@
 			
 			<!-- Slap your MOBILE logo here -->
 			<a class="mobile-logo" data-toggle="collapse" data-target="#nav-collapse">
-				<span>SUPER GRID</span>
+				<span>U Can Prefer</span>
 			</a>
 			
 			<!-- NAVIGATION
@@ -96,7 +96,7 @@
 				<ul class="nav">
 				
 					<!-- Slap your logo here -->
-					<li class="logo"><a>SUPER GRID</a></li>
+					<li class="logo"><a>U Can Prefer</a></li>
 					
 					<!-- portfolio (drop down) -->
 					<li>
@@ -161,7 +161,7 @@
 		   	
 		   		<!-- Portfolio Heading -->
 		   		<h5 class="heading">
-		   			<a href="<?php echo $item->url; ?>">
+		   			<a href="http://localhost/ccount203/click.php?id=1" target="_blank">
 		   				<?php echo $item->name; ?>
 		   			</a>
 		   		</h5>

@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
                         $table->string('name');
                         $table->string('sku');
+                        $table->string('type_id');
                         $table->string('price');
                         $table->string('url');
                         $table->text('description');
@@ -34,6 +35,7 @@ class CreateItemsTable extends Migration {
                         $table->string('qty');
                         $table->boolean('status');
                         $table->tinyInteger('publish')->unsigned();
+                        $table->tinyInteger('visibility')->unsigned();
 			$table->timestamps();
 		});
 	}

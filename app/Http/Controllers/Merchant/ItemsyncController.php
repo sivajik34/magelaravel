@@ -1,13 +1,13 @@
 <?php 
 namespace App\Http\Controllers\Merchant;
 use App\Http\Controllers\Controller;
-use Buzz\Message\Request;
-use Buzz\Message\Response;
+use Buzz\Message\Request as BuzzRequest;
+use Response;use Request;;
+use Buzz\Message\Response as BuzzResponse;
 use Buzz\Client\Curl;
 use App\models\Userswebsiteinfo;
 use Auth;
 use App\models\Item;
-use Illuminate\Support\Facades\Redirect;
 use Image;
 use Session;
 class ItemsyncController extends Controller {
@@ -42,78 +42,62 @@ class ItemsyncController extends Controller {
 	 */
 	public function sync()
 	{
+		$sync_type = Request::input('sync_type');
 		$user_id = Auth::user()->id;		
 		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
 		$host=$model->host;
 		$resource='rest/V1/products?searchCriteria[filter_groups][0][filters][0][field]=kensium&searchCriteria[filter_groups][0][filters][0][value]=1&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[current_page]=1&searchCriteria[page_size]=25';
-		$request = new Request('GET',$resource,$host);
-		$response = new Response();
+		$buzzrequest = new BuzzRequest('GET',$resource,$host);
+		$buzzresponse = new BuzzResponse();
 		$client = new Curl();  
-                Session::put('progress',"before curl");
+                Session::put('progress',"API call started");
     		Session::save();
-		$client->send($request, $response);
-		$result = json_decode($response->getContent());
-		$status_code=$response->getStatusCode();		
+		$client->send($buzzrequest, $buzzresponse);
+		$result = json_decode($buzzresponse->getContent());
+		$status_code=$buzzresponse->getStatusCode();		
                if($status_code=="400" && $result->message=="Invalid attribute name: %1" && $result->parameters[0]=="kensium")
 		{
-		return "please create product custom attribute 'kensium'";
+			Session::put('progress',"failed");
+	    		Session::save();
+			return response()->json(['syncstatus' => "please create product custom attribute 'kensium'"]);
+		
 		}	
 		if (!file_exists(public_path().'/images/'.$user_id)) {
     		mkdir(public_path().'/images/'.$user_id, 0777, true);
 		}	
 		if(isset($result->items) && $result->items!=null)
                 {
+			if($sync_type=="2")
+			   {
+	                        $items = Item::where('user_id',$user_id)->get();
+				$skuarr=$items->lists('sku');
+			   }
 			Session::put('progress', "records saving started");
     			Session::save();
 			foreach($result->items as $product)
 			{
+				if($sync_type=="2")
+         			   {
+                                     if (in_array($product->sku, $skuarr))
+	  				{ 
+					  continue;
+					}
+				    }
 				$this->saveItem($product,$user_id,$host);
-				Session::put('progress', $product->name);
-			        Session::save();	                  	
+					                  	
 			}
  		} else {
- 			echo "nothing synced";
+ 			return response()->json(['syncstatus' => 'nothing synced']);
 		       }
-		return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+			Session::put('progress', "completed");
+    			Session::save();
+		return response()->json(['syncstatus' => 'success']);
  		
 
 	}
-	public function appendSync(){ 
-		  
-		$user_id = Auth::user()->id;				
-		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
-		$host=$model->host;
-		$resource='rest/V1/products?searchCriteria[filter_groups][0][filters][0][field]=kensium&searchCriteria[filter_groups][0][filters][0][value]=1&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[current_page]=1&searchCriteria[page_size]=25';
-		$request = new Request('GET',$resource,$host);
-		$response = new Response();
-		$client = new Curl();  
-		$client->send($request, $response);
-		$result = json_decode($response->getContent());
-		$status_code=$response->getStatusCode();		
-               if($status_code=="400" && $result->message=="Invalid attribute name: %1" && $result->parameters[0]=="kensium")
-		{
-		return "please create product custom attribute 'kensium'";
-		}	
-		if (!file_exists(public_path().'/images/'.$user_id)) {
-    		mkdir(public_path().'/images/'.$user_id, 0777, true);
-		}	
-		if(isset($result->items) && $result->items!=null)
-                {
-			$items = Item::where('user_id',$user_id)->get();
-			$skuarr=$items->lists('sku');
-			foreach($result->items as $product)
-			{
-				if (in_array($product->sku, $skuarr))
-  				{ continue; }
-				$this->saveItem($product,$user_id,$host);	                  	
-			}
- 		} else {
- 			echo "nothing synced";
-		       }
-		return response()->json(['name' => 'Abigail', 'state' => 'CA']);
-          }
+	
 	public function getProgress() {
-    			return Response::json(array(Session::get('progress')));
+    			return response::json(array(Session::get('progress')));
 	}
 	protected function saveItem($product,$user_id,$host){
 			//echo "<pre>";print_r($product);exit;
