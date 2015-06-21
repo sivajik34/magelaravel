@@ -83,20 +83,7 @@ class ItemsyncController extends Controller {
 					  continue;
 					}
 				    }
-			$product_resource='rest/V1/products/'.$product->sku;
-			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
-			$buzzres = new BuzzResponse();
-			$client = new Curl();  
-                	Session::put('progress',$product->sku."API call started");
-    			Session::save();
-			$client->send($buzzreq, $buzzres);
-			$res = json_decode($buzzres->getContent());
-			$status_code=$buzzres->getStatusCode();
-                        //echo "<pre>";
-                        //print_r($res);
-                        //echo $status_code;exit;
-				if($status_code==200)
-				$this->saveItem($res,$user_id,$host);
+			$this->itemsync($product->sku,$user_id,$host);
 					                  	
 			}
  		} else {
@@ -112,6 +99,24 @@ class ItemsyncController extends Controller {
 	public function getProgress() {
     			return response::json(array(Session::get('progress')));
 	}
+
+	public function itemsync($sku,$user_id,$host){
+			$product_resource='rest/V1/products/'.$sku;
+			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
+			$buzzres = new BuzzResponse();
+			$client = new Curl();  
+                	Session::put('progress',$product->sku."API call started");
+    			Session::save();
+			$client->send($buzzreq, $buzzres);
+			$res = json_decode($buzzres->getContent());
+			$status_code=$buzzres->getStatusCode();
+                        //echo "<pre>";
+                        //print_r($res);
+                        //echo $status_code;exit;
+				if($status_code==200)
+				$this->saveItem($res,$user_id,$host);
+	}
+
 	protected function saveItem($product,$user_id,$host){
 			//echo "<pre>";print_r($product);exit;
 			$item = Item::firstOrNew(array('user_id' => $user_id,'sku'=>$product->sku,'store_id'=>$product->store_id));
