@@ -8,7 +8,7 @@
 				<div class="panel-heading">Manage Items</div>
 				<?php echo Session::get('message'); ?><?php $renamed_host=str_replace("/index.php","",url());?>
 				<div class="panel-body"><div class="table-responsive">
-					<table class="table">
+					<table class="table table-bordered table-hover">
 					<tr>
 					<th>Image</th>
 					<th>Name</th>

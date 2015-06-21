@@ -1,10 +1,11 @@
 <?php namespace App\Services;
 
 use App\models\User;
+use App\models\Role;
 use App\models\Userswebsiteinfo;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
-
+use Mail;
 class Registrar implements RegistrarContract {
 
 	/**
@@ -22,6 +23,16 @@ class Registrar implements RegistrarContract {
 			'host' => 'required',
 		]);
 	}
+	public function customervalidator(array $data)
+	{
+		return Validator::make($data, [
+			'name' => 'required|max:255',
+			'email' => 'required|email|max:255|unique:users',
+			'password' => 'required|confirmed|min:6',
+			
+		]);
+	}
+	
 
 	/**
 	 * Create a new user instance after a valid registration.
@@ -42,6 +53,24 @@ class Registrar implements RegistrarContract {
 		$profile->country = $data['country'];
 		$profile->mobile = $data['mobile'];		
 		$user->userswebsiteinfo()->save($profile);
+               /* $admin_user=User::find(1);
+		Mail::send('emails.welcome', $data, function($message) use ($data)
+            {
+                $message->from('no-reply@site.com', "Site name");
+                $message->subject("New Merchant Registered");
+                $message->to("sivajik34@gmail.com");
+            });*/
+		return $user;
+	}
+	public function createcustomer(array $data)
+	{
+		 $user=User::create([
+			'name' => $data['name'],
+			'email' => $data['email'],
+			'password' => bcrypt($data['password']),
+		]);
+                $customer=Role::find(3);
+		$user->attachRole($customer); 
 		return $user;
 	}
 

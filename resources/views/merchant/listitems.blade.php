@@ -7,8 +7,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Manage Items</div>
 				<?php echo Session::get('message'); ?><?php $renamed_host=str_replace("/index.php","",url());?>
-				<div class="panel-body"><div class="table-responsive">
-					<table class="table">
+				<div class="panel-body">
+<div class="table-responsive">
+					<table class="table table-bordered table-hover">
 					<tr><th>--</th>
 					<th>Image</th>
 					<th>Name</th>
@@ -32,7 +33,7 @@
 						case 1:
 						echo "new";
                                                ?>
-						<a href="<?php echo url('/merchant/manageitems/requesttopublish/'.$item->id); ?>">Request to Publish</a><?php
+						<br/><a href="<?php echo url('/merchant/manageitems/requesttopublish/'.$item->id); ?>">Request to Publish</a><?php
 						break;
 						case 2 :
 						echo "pending";
@@ -40,18 +41,18 @@
 						case 3:
 						echo "accepted";
  ?>
-						<a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php
+						<br/><a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php
 						break;
 						case 4 :
 						echo "rejected";
 						break;
 						case 5 :
 						echo "published";?>
-				<a href="<?php echo url('/merchant/manageitems/unpublishit/'.$item->id); ?>">unpublish</a>
+				<br/><a href="<?php echo url('/merchant/manageitems/unpublishit/'.$item->id); ?>">unpublish</a>
 						<?php break;
 						case 6 :
 						echo "unpublished";?>
-<a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php 
+<br/><a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php 
 					}
 					?></td>
 				</tr>

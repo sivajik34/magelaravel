@@ -36,8 +36,7 @@
     {!! HTML::script('js/jquery.manual-trigger.js') !!}    
     {!! HTML::script('js/jquery.ba-bbq.min.js') !!}
     {!! HTML::script('js/jquery.fancybox.js') !!}
-     
-    
+   
     <!-- Le preloader
     ================================================== -->
     <!-- Script to make sure everything loads -->
@@ -68,8 +67,25 @@
 
 
 <body onload="initialize()">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<!-- Preloader -->
+  ga('create', 'UA-64329202-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script> <!-- Preloader -->
 <div id="preloader">
     <div id="status"></div>
 </div>
@@ -125,9 +141,13 @@
 					<li>
 						<a><span data-toggle="collapse" data-target="#pages-collapse"></span>PAGES</a>
 						<ul id="pages-collapse" class="collapse out">
+<?php if (Auth::guest())
+{ ?>
 							<li><a href="<?php echo url().'/auth/login';?>">LOGIN</a></li>
-							<li><a href="<?php echo url().'/auth/register';?>">REGISTER</a></li>
-                                                        <li><a href="<?php echo url().'/auth/register';?>">VENDER REGISTER</a></li>
+							<li><a href="<?php echo url().'/auth/customerregister';?>">REGISTER</a></li>
+<?php } else {?>
+                                                        <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+<?php } ?>
 							<li><a href="#filter=.page-contact">CONTACT</a></li>
 						</ul>
 					</li>
@@ -161,7 +181,7 @@
 		   	
 		   		<!-- Portfolio Heading -->
 		   		<h5 class="heading">
-		   			<a href="http://localhost/ccount203/click.php?id=1" target="_blank">
+		   			<a href="<?php echo $item->url;?>" onclick="trackOutboundLink('<?php echo $item->url;?>'); return false;" target="_blank">
 		   				<?php echo $item->name; ?>
 		   			</a>
 		   		</h5>

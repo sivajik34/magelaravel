@@ -32,8 +32,9 @@ class CreateItemsTable extends Migration {
                         $table->string('image');
 			$table->string('thumbnail_image');
 			$table->string('small_image');
-                        $table->string('qty');
+                        $table->integer('qty');
                         $table->boolean('status');
+		        $table->boolean('stock_status');
                         $table->tinyInteger('publish')->unsigned();
                         $table->tinyInteger('visibility')->unsigned();
 			$table->timestamps();

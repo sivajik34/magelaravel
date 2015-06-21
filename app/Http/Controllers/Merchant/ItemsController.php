@@ -76,10 +76,9 @@ class ItemsController extends Controller {
 	 */
 	public function update($id)
 	{
-	 $item = Item::find($id);
-	 $item->userswebsiteinfo->status = 1;
-		 
-         return Redirect::back()->with('message','Updated Successful !');
+		 $item = Item::find($id);
+		 $item->userswebsiteinfo->status = 1;
+	         return Redirect::back()->with('message','Updated Successful !');
 	}
 	public function requestToPublish($id)
 	{

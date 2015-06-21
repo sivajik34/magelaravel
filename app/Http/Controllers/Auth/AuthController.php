@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller {
 
@@ -37,6 +38,25 @@ class AuthController extends Controller {
 	public function getRegister()
 	{
 		return view('auth.vendorregister');
+	}
+	public function getCustomerregister()
+	{
+		return view('auth.register');
+	}
+	public function postCustomerregister(Request $request)
+	{
+		$validator = $this->registrar->customervalidator($request->all());
+
+		if ($validator->fails())
+		{
+			$this->throwValidationException(
+				$request, $validator
+			);
+		}
+
+		$this->auth->login($this->registrar->createcustomer($request->all()));
+
+		return redirect('/');
 	}
 
 }

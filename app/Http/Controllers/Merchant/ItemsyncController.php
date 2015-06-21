@@ -50,7 +50,7 @@ class ItemsyncController extends Controller {
 		$buzzrequest = new BuzzRequest('GET',$resource,$host);
 		$buzzresponse = new BuzzResponse();
 		$client = new Curl();  
-                Session::put('progress',"API call started");
+                Session::put('progress',"Item Collection API calling...");
     		Session::save();
 		$client->send($buzzrequest, $buzzresponse);
 		$result = json_decode($buzzresponse->getContent());
@@ -72,7 +72,7 @@ class ItemsyncController extends Controller {
 	                        $items = Item::where('user_id',$user_id)->get();
 				$skuarr=$items->lists('sku');
 			   }
-			Session::put('progress', "records saving started");
+			Session::put('progress', "No of items to sync:".count($result->items));
     			Session::save();
 			foreach($result->items as $product)
 			{
@@ -83,7 +83,20 @@ class ItemsyncController extends Controller {
 					  continue;
 					}
 				    }
-				$this->saveItem($product,$user_id,$host);
+			$product_resource='rest/V1/products/'.$product->sku;
+			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
+			$buzzres = new BuzzResponse();
+			$client = new Curl();  
+                	Session::put('progress',$product->sku."API call started");
+    			Session::save();
+			$client->send($buzzreq, $buzzres);
+			$res = json_decode($buzzres->getContent());
+			$status_code=$buzzres->getStatusCode();
+                        //echo "<pre>";
+                        //print_r($res);
+                        //echo $status_code;exit;
+				if($status_code==200)
+				$this->saveItem($res,$user_id,$host);
 					                  	
 			}
  		} else {
@@ -123,8 +136,11 @@ class ItemsyncController extends Controller {
 					   curl_setopt($ch, CURLOPT_FILE, $fp);
 					   curl_setopt($ch, CURLOPT_HEADER, 0);
 					   curl_exec($ch);
+                                           $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 					   curl_close($ch);
 					   fclose($fp);
+                                           if($retcode==200)
+					   {
                	        		   $item->image='/images/'.$user_id.'/'.$product->sku.".".$extension; 
  			                   $renamed_host=str_replace("/index.php","",url());
 			                   $path=$renamed_host.$item->image;
@@ -132,6 +148,11 @@ class ItemsyncController extends Controller {
 		              	           $filenameOut = public_path().'/images/'.$item->user_id.'/small_'.$item->sku.".".$extension;
        					   $img=Image::make($path)->resize(75, 75)->save($filenameOut);
                                            $item->thumbnail_image='/images/'.$user_id.'/small_'.$product->sku.".".$extension;
+					   }
+					   else{
+						$item->image='/images/placeholder.png';	
+                                                $item->thumbnail_image='/images/rsz_placeholder.png';			
+				        	}
 			                   break;
                               case "description" :
 				       	  $item->description=$custom_attribute->value;
@@ -145,9 +166,12 @@ class ItemsyncController extends Controller {
 			      case "meta_description" :
 				        	$item->meta_description=$custom_attribute->value;
 					break;
-				case "url_key" :
+			      case "url_key" :
 					$item->url =$host.$custom_attribute->value.'.html';
 					break;
+			      case "quantity_and_stock_status" :
+					$item->qty=$custom_attribute->value[1];
+					break;			
 			}
 			
 		

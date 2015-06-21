@@ -8,7 +8,7 @@
 				<div class="panel-heading">Manage Merchants</div>
 				<?php echo Session::get('message'); ?>
 				<div class="panel-body"><div class="table-responsive">
-					<table class="table">
+					<table class="table table-bordered table-hover">
 					<tr>
 					<th>Name</th>
 					<th>Email</th>
@@ -21,7 +21,7 @@
 					</tr>
 					<?php
 				foreach($users as $user){
-				if($user->hasRole('admin'))
+				if($user->hasRole('admin') || $user->hasRole('customer'))
 				continue;	
 				?>
 				<tr>
@@ -35,7 +35,7 @@
 				echo "activated";
 				}else{
 				echo "not activated";
-?><a href="<?php echo url('/admin/manageroles/activate/'.$user->id); ?>">Activate</a><?php
+?></br><a href="<?php echo url('/admin/manageroles/activate/'.$user->id); ?>">Activate</a><?php
 
 
 }?></td><td><?php if($user->userswebsiteinfo->status){ ?>

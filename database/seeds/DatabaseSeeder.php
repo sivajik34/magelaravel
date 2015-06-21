@@ -51,6 +51,11 @@ class UserTableSeeder extends Seeder {
 	 $itemsync->description  = 'itemsync'; // optional
 	 $itemsync->save();
          $merchant->attachPermission($itemsync);
+	$customer = new Role();
+	$customer->name         = 'customer';
+	$customer->display_name = 'Front end customer'; // optional
+	$customer->description  = 'User is allowed to view items in front end'; // optional
+	$customer->save();
     }
 
 }
