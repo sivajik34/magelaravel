@@ -105,7 +105,7 @@ class ItemsyncController extends Controller {
 			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
 			$buzzres = new BuzzResponse();
 			$client = new Curl();  
-                	Session::put('progress',$product->sku."API call started");
+                	Session::put('progress',$sku."API call started");
     			Session::save();
 			$client->send($buzzreq, $buzzres);
 			$res = json_decode($buzzres->getContent());
