@@ -33,7 +33,8 @@ class ItemsyncController extends Controller {
 		$this->middleware('auth');
 	}
 	public function index(){
-		return view('merchant.itemsync');
+		$items = Item::lists('sku', 'sku');
+		return view('merchant.itemsync',['items' => $items]);
 	}
 	/**
 	 * 
@@ -100,7 +101,7 @@ class ItemsyncController extends Controller {
     			return response::json(array(Session::get('progress')));
 	}
 
-	public function itemsync($sku,$user_id,$host){
+	protected function itemsync($sku,$user_id,$host){
 			$product_resource='rest/V1/products/'.$sku;
 			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
 			$buzzres = new BuzzResponse();
@@ -116,7 +117,17 @@ class ItemsyncController extends Controller {
 				if($status_code==200)
 				$this->saveItem($res,$user_id,$host);
 	}
-
+	public function itemresync()
+	{
+			$sku = Request::input('sku');
+			$user_id = Auth::user()->id;		
+			$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
+			$host=$model->host;
+			$this->itemsync($sku,$user_id,$host);
+			Session::put('progress', "completed");
+    			Session::save();
+			return response()->json(['syncstatus' => 'success']);
+	}
 	protected function saveItem($product,$user_id,$host){
 			//echo "<pre>";print_r($product);exit;
 			$item = Item::firstOrNew(array('user_id' => $user_id,'sku'=>$product->sku,'store_id'=>$product->store_id));

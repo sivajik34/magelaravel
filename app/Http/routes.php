@@ -27,6 +27,7 @@ Route::get('/admin/manageitems/publishno/{id}', 'Admin\ItemsController@publishRe
 Entrust::routeNeedsRole('admin/*', 'admin', Redirect::to('/home'));
 Route::get('/merchant/itemsync', 'Merchant\ItemsyncController@index');
 Route::post('/merchant/sync', 'Merchant\ItemsyncController@sync');
+Route::post('/merchant/itemresync', 'Merchant\ItemsyncController@itemresync');
 Route::get('/progress', 'Merchant\ItemsyncController@getProgress');
 Route::get('/merchant/appendsync', 'Merchant\ItemsyncController@appendSync');
 Route::get('/merchant/manageitems', 'Merchant\ItemsController@index');
