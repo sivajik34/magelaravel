@@ -17,7 +17,7 @@
 					<th>Country</th>
 					<th>Mobile</th>
 					<th>Status</th>
-					<th>Items</th>
+					<th>Action</th>
 					</tr>
 					<?php
 				foreach($users as $user){
@@ -39,7 +39,8 @@
 
 
 }?></td><td><?php if($user->userswebsiteinfo->status){ ?>
-				<a href="<?php echo url('/admin/manageitems/merchantitems/'.$user->id); ?>">Manage</a>
+				<a href="<?php echo url('/admin/manageitems/merchantitems/'.$user->id); ?>">Manage Items</a><br/>
+				<a href="<?php echo url('/admin/itemsync/'.$user->id); ?>">Item Sync</a>
 				<?php } ?></td>
 				</tr>
 				<?php }

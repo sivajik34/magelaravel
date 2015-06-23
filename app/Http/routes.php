@@ -24,12 +24,15 @@ Route::get('/admin/manageroles/activate/{id}', 'Admin\ManageRolesController@upda
 Route::get('/admin/manageitems/merchantitems/{id}', 'Admin\ItemsController@merchantItems');
 Route::get('/admin/manageitems/publishyes/{id}', 'Admin\ItemsController@publishAccept');
 Route::get('/admin/manageitems/publishno/{id}', 'Admin\ItemsController@publishReject');
+Route::get('/admin/itemsync/{id}', 'Admin\ItemsyncController@index');
+Route::post('/admin/sync', 'Admin\ItemsyncController@sync');
+Route::post('/admin/itemresync', 'Admin\ItemsyncController@itemresync');
+Route::get('/progress', 'Admin\ItemsyncController@getProgress');
 Entrust::routeNeedsRole('admin/*', 'admin', Redirect::to('/home'));
 Route::get('/merchant/itemsync', 'Merchant\ItemsyncController@index');
 Route::post('/merchant/sync', 'Merchant\ItemsyncController@sync');
 Route::post('/merchant/itemresync', 'Merchant\ItemsyncController@itemresync');
 Route::get('/progress', 'Merchant\ItemsyncController@getProgress');
-Route::get('/merchant/appendsync', 'Merchant\ItemsyncController@appendSync');
 Route::get('/merchant/manageitems', 'Merchant\ItemsController@index');
 Route::get('/merchant/manageitems/requesttopublish/{id}', 'Merchant\ItemsController@requestToPublish');
 Route::get('/merchant/manageitems/publishit/{id}', 'Merchant\ItemsController@publishit');

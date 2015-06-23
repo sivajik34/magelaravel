@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\Merchant;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Buzz\Message\Request as BuzzRequest;
 use Response;use Request;;
@@ -32,10 +32,11 @@ class ItemsyncController extends Controller {
 	{
 		$this->middleware('auth');
 	}
-	public function index(){
-                $user_id = Auth::user()->id;	
-		$items = Item::where('user_id', '=', $user_id)->lists('sku', 'sku');
-		return view('merchant.itemsync',['items' => $items]);
+	public function index($id){
+		$data=array();
+                $data[0]=$id;
+		$data[1] = Item::where('user_id', '=', $id)->lists('sku', 'sku');
+		return view('admin.itemsync',['data' => $data]);
 	}
 	/**
 	 * 
@@ -45,7 +46,7 @@ class ItemsyncController extends Controller {
 	public function sync()
 	{
 		$sync_type = Request::input('sync_type');
-		$user_id = Auth::user()->id;		
+		$user_id = Request::input('user_id');		
 		$model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
 		$host=$model->host;
 		$resource='rest/V1/products?searchCriteria[filter_groups][0][filters][0][field]=kensium&searchCriteria[filter_groups][0][filters][0][value]=1&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[current_page]=1&searchCriteria[page_size]=25';
@@ -107,7 +108,7 @@ class ItemsyncController extends Controller {
 			$buzzreq = new BuzzRequest('GET',$product_resource,$host);
 			$buzzres = new BuzzResponse();
 			$client = new Curl();  
-                	Session::put('progress',$sku."API call started");
+                	Session::put('progress',$sku."  API call started");
     			Session::save();
 			$client->send($buzzreq, $buzzres);
 			$res = json_decode($buzzres->getContent());
