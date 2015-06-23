@@ -52,7 +52,7 @@
 					?></td>
 				</tr>
 				<?php }
-        			 ?></table><?php echo $items->render(); ?>
+        			 ?></table><?php //echo $items->render(); ?>{!! str_replace('/?', '?', $items->render()) !!}
 				</div>
 			</div>
 		</div>
