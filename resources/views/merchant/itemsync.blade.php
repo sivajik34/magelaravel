@@ -27,7 +27,7 @@
     $(document).ready(function() {
         $('#form-overview').on('submit', function() {
             var interval=setInterval(function(){
-                $.getJSON('http://localhost/magelaravel/public/index.php/progress', function(data) {
+                $.getJSON('<?php echo url();?>/progress', function(data) {
 		if(data[0]=="completed" || data[0]=="failed") clearInterval(interval);
                     $('#progress').html("Present Status:"+data[0]);
                 });
