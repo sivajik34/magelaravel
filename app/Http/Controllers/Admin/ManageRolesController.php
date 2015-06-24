@@ -7,90 +7,93 @@ use App\models\User;
 use App\models\Permission;
 use Illuminate\Http\Request;
 use Redirect;
-class ManageRolesController extends Controller {
 
-        public function __construct()
-	{
-		$this->middleware('auth');
-	}
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$users=User::with('userswebsiteinfo')->get();
-                return view('admin.listmerchants',['users' => $users]);
-	}
+class ManageRolesController extends Controller
+{
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $users = User::with('userswebsiteinfo')->get();
+        return view('admin.listmerchants', ['users' => $users]);
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        //
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-	 $user = User::with('userswebsiteinfo')->find($id);
-	 $user->userswebsiteinfo->status = 1;
-	 $user->push();
-         $merchant=Role::find(2);	 
-	 $user->attachRole($merchant); 	 
-         return Redirect::back()->with('message','Updated Successful !');
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $user = User::with('userswebsiteinfo')->find($id);
+        $user->userswebsiteinfo->status = 1;
+        $user->push();
+        $merchant = Role::find(2);
+        $user->attachRole($merchant);
+        return Redirect::back()->with('message', 'Updated Successful !');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
 }
