@@ -8,19 +8,21 @@
 				<div class="panel-heading">Manage Item Sync</div>
 				<div class="panel-body">
 {!! Form::open(array('url' => '/admin/itemresync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview1' )) !!}
-    {!! Form::Label('sku','Existed Item re Sync:') !!}
-{!!Form::select('sku', $data[1],null,['class' => 'form-control']) !!}{!! Form::hidden('user_id', $data[0]) !!}
-        {!! Form::submit('Item resync', array('class' => 'btn btn-lg btn-success')) !!}
-    {!! Form::close() !!}	</br>				
+<div class="table-responsive">
+					<table class="table">
+    <tr><td>{!! Form::Label('sku','Existed Item re Sync:') !!}
+{!!Form::select('sku', $data[1],null,['class' => 'form-control']) !!}{!! Form::hidden('user_id', $data[0]) !!}</td><td>
+        {!! Form::submit('Item resync', array('class' => 'btn btn-lg btn-success')) !!}</td></tr>
+    {!! Form::close() !!}					
 {!! Form::open(array('url' => '/admin/sync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview' )) !!}
-    {!! Form::Label('sync_type','Item Sync Type:') !!}
+   <tr><td> {!! Form::Label('sync_type','Item Sync Type:') !!}
 {!!Form::select('sync_type', array(
     ''=>'Select Sync Type',
     '1'=>'Override Existing Data',
     '2'=>'Append Data'
-    ),null,['class' => 'form-control']) !!}{!! Form::hidden('user_id', $data[0]) !!}
-        {!! Form::submit('Item sync', array('class' => 'btn btn-lg btn-success')) !!}
-    {!! Form::close() !!}<br/>
+    ),null,['class' => 'form-control']) !!}{!! Form::hidden('user_id', $data[0]) !!}</td><td>
+        {!! Form::submit('Item sync', array('class' => 'btn btn-lg btn-success')) !!}</td></tr>
+    {!! Form::close() !!}</table><br/>
 
     <div id="progress"></div>
     <div id="progress1"></div>
