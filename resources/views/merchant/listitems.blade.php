@@ -5,9 +5,10 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Manage Items</div>
-				<?php echo Session::get('message'); ?><?php $renamed_host=str_replace("/index.php","",url());?>
+				<div class="panel-heading">Manage Items<span style="float:right;color:green;"><?php echo Session::get('message'); ?></span><?php $renamed_host=str_replace("/index.php","",url());?></div>
+				
 				<div class="panel-body">
+
 <div class="table-responsive">
 					<table class="table table-bordered table-hover">
 					<tr><th>--</th>
@@ -31,27 +32,27 @@
 					switch($item->publish)
 					{
 						case 1:
-						echo "new";
+						echo "New";
                                                ?>
 						<br/><a href="<?php echo url('/merchant/manageitems/requesttopublish/'.$item->id); ?>">Request to Publish</a><?php
 						break;
 						case 2 :
-						echo "pending";
+						echo "Pending";
 						break;
 						case 3:
-						echo "accepted";
+						echo "Accepted";
  ?>
 						<br/><a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php
 						break;
 						case 4 :
-						echo "rejected";
+						echo "Rejected";
 						break;
 						case 5 :
-						echo "published";?>
+						echo "Published";?>
 				<br/><a href="<?php echo url('/merchant/manageitems/unpublishit/'.$item->id); ?>">unpublish</a>
 						<?php break;
 						case 6 :
-						echo "unpublished";?>
+						echo "Unpublished";?>
 <br/><a href="<?php echo url('/merchant/manageitems/publishit/'.$item->id); ?>"> publish</a><?php 
 					}
 					?></td>

@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Manage Items</div>
-				<?php echo Session::get('message'); ?><?php $renamed_host=str_replace("/index.php","",url());?>
+				<div class="panel-heading">Manage Items<span style="float:right;color:green;"><?php echo Session::get('message'); ?></span></div>
+				<?php $renamed_host=str_replace("/index.php","",url());?>
 				<div class="panel-body"><div class="table-responsive">
 					<table class="table table-bordered table-hover">
 					<tr>
@@ -29,24 +29,24 @@
 					switch($item->publish)
 					{
 						case 1:
-						echo "new";                                              
+						echo "New";                                              
 						break;
 						case 2 :
-						echo "pending";
- ?>			<a href="<?php echo url('/admin/manageitems/publishyes/'.$item->id); ?>">Accept</a>
+						echo "Pending";
+ ?>			<br/><a href="<?php echo url('/admin/manageitems/publishyes/'.$item->id); ?>">Accept</a><br/>
                                                 <a href="<?php echo url('/admin/manageitems/publishno/'.$item->id); ?>">Reject</a><?php
 						break;
 						case 3:
-						echo "accepted";
+						echo "Accepted";
 						break;
 						case 4 :
-						echo "rejected";
+						echo "Rejected";
 						break;
 						case 5 :
-						echo "published";
+						echo "Published";
 						break;
 					        case 6 :
-						echo "unpublished";
+						echo "Unpublished";
 						break;
 					}
 					?></td>

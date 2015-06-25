@@ -32,10 +32,9 @@
 				<td><?php echo $user->userswebsiteinfo->country; ?></td>
 				<td><?php echo $user->userswebsiteinfo->mobile; ?></td>
 				<td><?php if($user->userswebsiteinfo->status){ 
-				echo "activated";
-				}else{
-				echo "not activated";
-?></br><a href="<?php echo url('/admin/manageroles/activate/'.$user->id); ?>">Activate</a><?php
+				echo "Activated";
+				}else{				
+?><a href="<?php echo url('/admin/manageroles/activate/'.$user->id); ?>">Activate</a><?php
 
 
 }?></td><td><?php if($user->userswebsiteinfo->status){ ?>

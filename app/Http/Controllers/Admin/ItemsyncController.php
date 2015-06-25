@@ -128,7 +128,7 @@ class ItemsyncController extends Controller
     public function itemresync()
     {
         $sku = Request::input('sku');
-        $user_id = Auth::user()->id;
+        $user_id = Request::input('user_id');
         $model = Userswebsiteinfo::where('user_id', '=', $user_id)->firstOrFail();
         $host = $model->host;
         $this->itemsync($sku, $user_id, $host);

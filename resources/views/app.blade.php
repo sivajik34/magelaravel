@@ -29,19 +29,20 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Kensium Merchant Place</a>
+<?php $renamed_host=str_replace("/index.php","",url());?>
+				<a class="navbar-brand" href="#"><img src="<?php echo $renamed_host.'/images/kensium_logo.png';?>"/></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}" target="_blank">Home(front end store )</a></li>
+					<!--<li><a href="{{ url('/') }}" target="_blank">Home(front end store )</a></li>-->
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('admin')) { ?>
-					<li><a href="{{ url('/admin/manageroles') }}">Manage Merchants</a></li>
+					<li><a href="{{ url('/admin/manageroles') }}">Merchants</a></li>
 					<?php } ?>
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>
 					<li><a href="{{ url('/merchant/itemsync') }}" >Item sync</a></li>
-					<li><a href="{{ url('/merchant/manageitems') }}">Manage Items</a></li>
-					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li>Admin approval pending for item sync.</li><?php }?>
+					<li><a href="{{ url('/merchant/manageitems') }}">Items</a></li>
+					<?php } else if(is_object(Auth::user()) && !(Auth::user()->hasRole('admin'))) {?><li style="margin-top:15px;">Admin approval pending for item sync.</li><?php }?>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

@@ -9,7 +9,7 @@
 				<div class="panel-body">
 {!! Form::open(array('url' => '/admin/itemresync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview1' )) !!}
     {!! Form::Label('sku','Existed Item re Sync:') !!}
-{!!Form::select('sku', $data[1],null,['class' => 'form-control']) !!}
+{!!Form::select('sku', $data[1],null,['class' => 'form-control']) !!}{!! Form::hidden('user_id', $data[0]) !!}
         {!! Form::submit('Item resync', array('class' => 'btn btn-lg btn-success')) !!}
     {!! Form::close() !!}	</br>				
 {!! Form::open(array('url' => '/admin/sync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview' )) !!}
@@ -63,7 +63,7 @@
 
             $.post(
                 $(this).prop('action'),
-                {"_token": $(this).find('input[name=_token]').val(),"sku": $('#sku').val()},
+                {"_token": $(this).find('input[name=_token]').val(),"sku": $('#sku').val(),"user_id":$(this).find('input[name=user_id]').val()},
                 function(data,status) {
                    $('#progress1').html(data['syncstatus']);// window.location.href = 'success';
                 },
