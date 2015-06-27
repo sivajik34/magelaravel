@@ -80,8 +80,8 @@
 <body onload="initialize()">
 
 <script>
-var trackOutboundLink = function(url) {
-   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+var trackOutboundLink = function(url,user_id) {
+   ga('send', 'event', user_id, 'click', url, {'hitCallback':
      function () {
      document.location = url;
      }
@@ -181,7 +181,7 @@ var trackOutboundLink = function(url) {
 		   	
 		   		<!-- Portfolio Heading -->
 		   		<h5 class="heading">
-		   			<a href="<?php echo $item->url;?>" onclick="trackOutboundLink('<?php echo $item->url;?>'); return false;" target="_blank">
+		   			<a href="<?php echo $item->url;?>" onclick="trackOutboundLink('<?php echo $item->url;?>','<?php echo $item->user_id;?>'); return false;" target="_blank">
 		   				<?php echo $item->name; ?>
 		   			</a>
 		   		</h5>

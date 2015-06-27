@@ -28,7 +28,7 @@ class ReportsController extends Controller
     {
         $present = Carbon::now();
         $start = Carbon::createFromDate(2015, 06, 01, 'GMT');
-        $analyticsData = LaravelAnalytics::performQuery($start,$present, "ga:totalEvents", $others = array("dimensions"=>"ga:eventLabel"));
+        $analyticsData = LaravelAnalytics::performQuery($start,$present, "ga:totalEvents", $others = array("dimensions"=>"ga:eventCategory%2Cga:eventLabel"));
         return view('admin.reports', ['analyticsData' => $analyticsData]);
     }
 
