@@ -39,7 +39,7 @@
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('admin')) { ?>
 					<li><a href="{{ url('/admin/manageroles') }}">Merchants</a></li>
 					<li><a href="#">Customers</a>
-					</li><li><a href="#">Settings</a></li><li><a href="#">Reports</a></li>
+					</li><li><a href="#">Settings</a></li><li><a href="{{ url('/admin/reports') }}">Reports</a></li>
 					<?php } ?>
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>
 					<li><a href="{{ url('/merchant/itemsync') }}" >Item sync</a></li>

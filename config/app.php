@@ -138,6 +138,7 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'Spatie\LaravelAnalytics\LaravelAnalyticsServiceProvider',
 	
 
 		/*
@@ -200,6 +201,7 @@ return [
                 'HTML'=> 'Illuminate\Html\HtmlFacade',
                 'Entrust' => 'Zizaco\Entrust\EntrustFacade',
 		'Image' => 'Intervention\Image\Facades\Image',
+	        'LaravelAnalytics' => 'Spatie\LaravelAnalytics\LaravelAnalyticsFacade'
 	       
 
 	],

@@ -62,21 +62,23 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="../assets/ico/favicon.png">
-    
-  </head>
-
-
-<body onload="initialize()">
-<script>
+    <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-64329202-1', 'auto');
+  ga('create', 'UA-64329202-1', {
+  'cookieDomain': 'none'
+});
   ga('send', 'pageview');
 
 </script>
+  </head>
+
+
+<body onload="initialize()">
+
 <script>
 var trackOutboundLink = function(url) {
    ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
@@ -89,8 +91,6 @@ var trackOutboundLink = function(url) {
 <div id="preloader">
     <div id="status"></div>
 </div>
-
-
 
 <!-- Le Header
 ================================================== -->
