@@ -8,6 +8,13 @@
 				<div class="panel-heading">Reports<span style="float:right;color:green;"><?php echo Session::get('message'); ?></span></div>
 				<?php $renamed_host=str_replace("/index.php","",url());?>
 				<div class="panel-body">
+{!! Form::open(array('url' => '/admin/reports', 'class' => 'form' ,'method' => 'get')) !!}
+{!! Form::Label('start_date','Start Date:') !!}
+{!! Form::text('start_date', '', array('id' => 'startdatepicker'))!!}
+{!! Form::Label('end_date','End Date:') !!}
+{!! Form::text('end_date', '', array('id' => 'enddatepicker'))!!}
+{!! Form::submit('Show Report', array('class' => 'btn btn-lg btn-success')) !!}
+{!! Form::close() !!}
 <?php // echo "<pre>";print_r($analyticsData); ?><div class="table-responsive">
 					<table class="table table-bordered table-hover">
 					<tr><th>Merchant</th>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\models\Role;
 use App\models\User;
 use App\models\Permission;
-use Illuminate\Http\Request;
+use Request;
 use App\models\Item;
 use Redirect;
 use LaravelAnalytics;
@@ -26,72 +26,23 @@ class ReportsController extends Controller
 
     public function index()
     {
-        $present = Carbon::now();
-        $start = Carbon::createFromDate(2015, 06, 01, 'GMT');
+	if (Request::has('start_date')&&Request::has('end_date'))
+	{
+    	$start_date = Request::input('start_date');
+	$end_date = Request::input('end_date');
+	$start=explode("/",$start_date);
+	$end=explode("/",$end_date);
+       //echo $start_date;echo $end_date; 
+	$present = Carbon::createFromDate($end[2], $end[0], $end[1], 'GMT');
+        $start = Carbon::createFromDate($start[2], $start[0], $start[1], 'GMT');
+	}else{
+	$present = Carbon::now();
+	$start = Carbon::now()->subWeek();
+	}
+	
         $analyticsData = LaravelAnalytics::performQuery($start,$present, "ga:totalEvents", $others = array("dimensions"=>"ga:eventCategory%2Cga:eventLabel"));
         return view('admin.reports', ['analyticsData' => $analyticsData]);
     }
 
-    public function merchantItems($id)
-    {
-
-        $items = Item::Where('user_id', $id)->paginate(5);
-        return view('admin.listitems', ['items' => $items]);
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-   
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
+    
 }
