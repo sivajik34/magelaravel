@@ -17,7 +17,7 @@
 					<th>Country</th>
 					<th>Mobile</th>
 					<th>Status</th>
-					<th>Action</th>
+					<th>Action</th><th>Item auto publish</th>
 					</tr>
 					<?php
 				foreach($users as $user){
@@ -40,7 +40,14 @@
 }?></td><td><?php if($user->userswebsiteinfo->status){ ?>
 				<a href="<?php echo url('/admin/manageitems/merchantitems/'.$user->id); ?>">Manage Items</a><br/>
 				<a href="<?php echo url('/admin/itemsync/'.$user->id); ?>">Item Sync</a>
-				<?php } ?></td>
+				<?php } ?></td><td><?php if($user->userswebsiteinfo->item_auto_publish){ 
+				echo "Enabled";?> <br><a href="<?php echo url('/admin/manageroles/itemautodisable/'.$user->id); ?>">Disable</a><?php
+				}else{	
+echo "Disabled";			
+?><br><a href="<?php echo url('/admin/manageroles/itemautoenable/'.$user->id); ?>">Enable</a><?php
+
+
+}?></td>
 				</tr>
 				<?php }
         			 ?></table>

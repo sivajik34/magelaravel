@@ -85,6 +85,20 @@ class ManageRolesController extends Controller
         return Redirect::back()->with('message', 'Updated Successful !');
     }
 
+    public function itemautoenable($id)
+    {
+        $user = User::with('userswebsiteinfo')->find($id);
+        $user->userswebsiteinfo->item_auto_publish = 1;
+        $user->push();        
+        return Redirect::back()->with('message', 'Updated Successful !');
+    }
+    public function itemautodisable($id)
+    {
+        $user = User::with('userswebsiteinfo')->find($id);
+        $user->userswebsiteinfo->item_auto_publish = 0;
+        $user->push();        
+        return Redirect::back()->with('message', 'Updated Successful !');
+    }
     /**
      * Remove the specified resource from storage.
      *

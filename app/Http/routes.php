@@ -21,6 +21,8 @@ Route::controllers([
 ]);
 Route::get('/admin/manageroles', 'Admin\ManageRolesController@index');
 Route::get('/admin/manageroles/activate/{id}', 'Admin\ManageRolesController@update');
+Route::get('/admin/manageroles/itemautoenable/{id}', 'Admin\ManageRolesController@itemautoenable');
+Route::get('/admin/manageroles/itemautodisable/{id}', 'Admin\ManageRolesController@itemautodisable');
 Route::get('/admin/manageitems/merchantitems/{id}', 'Admin\ItemsController@merchantItems');
 Route::get('/admin/reports' ,'Admin\ReportsController@index');
 Route::get('/admin/manageitems/publishyes/{id}', 'Admin\ItemsController@publishAccept');
