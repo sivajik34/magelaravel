@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder {
     public function run()
     {
         //DB::table('users')->delete();
-        $user=User::create(['name'=>'sivakumar','email' => 'sivajik34@gmail.com','password' => bcrypt('admin123')]);
+        $user=User::create(['name'=>'kensium','email' => 'admin@kensium.com','password' => bcrypt('admin123')]);
 	$admin = new Role();
 	$admin->name         = 'admin';
 	$admin->display_name = 'User Administrator'; // optional

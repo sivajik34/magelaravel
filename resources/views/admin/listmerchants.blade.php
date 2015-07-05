@@ -5,8 +5,8 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Manage Merchants</div>
-				<?php echo Session::get('message'); ?>
+				<div class="panel-heading">Manage Merchants<span style="float:right;color:green;"><?php echo Session::get('message'); ?></span></div>
+				
 				<div class="panel-body"><div class="table-responsive">
 					<table class="table table-bordered table-hover">
 					<tr>

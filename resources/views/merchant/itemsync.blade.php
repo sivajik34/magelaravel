@@ -6,12 +6,12 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Manage Item Sync</div>
-				<div class="panel-body">
+	 			<div class="panel-body"><?php if(count($items)) { ?>
 {!! Form::open(array('url' => '/merchant/itemresync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview1' )) !!}
     {!! Form::Label('sku','Existed Item re Sync:') !!}
 {!!Form::select('sku', $items,null,['class' => 'form-control']) !!}
         {!! Form::submit('Item resync', array('class' => 'btn btn-lg btn-success')) !!}
-    {!! Form::close() !!}	</br>				
+    {!! Form::close() !!}<?php } ?>	</br>				
 {!! Form::open(array('url' => '/merchant/sync', 'class' => 'form-inline', 'role' => 'form', 'id' => 'form-overview' )) !!}
     {!! Form::Label('sync_type','Item Sync Type:') !!}
 {!!Form::select('sync_type', array(

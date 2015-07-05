@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration {
 			$table->string('country');
 			$table->string('mobile');
 			$table->boolean('status')->default(false);
+			$table->boolean('item_auto_publish')->default(false);
 			$table->string('notes')->nullable();			
 			$table->timestamps();
 		});
