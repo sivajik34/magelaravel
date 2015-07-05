@@ -59,7 +59,7 @@
 					<!--<li><a href="{{ url('/') }}" target="_blank">Home(front end store )</a></li>-->
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('admin')) { ?>
 					<li><a href="{{ url('/admin/manageroles') }}">Merchants</a></li>
-					<li><a href="#">Customers</a>
+					<li><a href="{{ url('/admin/customers') }}">Customers</a>
 					</li><li><a href="#">Settings</a></li><li><a href="{{ url('/admin/reports') }}">Reports</a></li>
 					<?php } ?>
 					<?php if( is_object(Auth::user()) && Auth::user()->hasRole('merchant')) { ?>

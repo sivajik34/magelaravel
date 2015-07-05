@@ -29,6 +29,7 @@ Route::get('/admin/itemsync/{id}', 'Admin\ItemsyncController@index');
 Route::post('/admin/sync', 'Admin\ItemsyncController@sync');
 Route::post('/admin/itemresync', 'Admin\ItemsyncController@itemresync');
 Route::get('/progress', 'Admin\ItemsyncController@getProgress');
+Route::get('/admin/customers', 'Admin\CustomersController@index');
 Entrust::routeNeedsRole('admin/*', 'admin', Redirect::to('/home'));
 Route::get('/merchant/itemsync', 'Merchant\ItemsyncController@index');
 Route::post('/merchant/sync', 'Merchant\ItemsyncController@sync');
